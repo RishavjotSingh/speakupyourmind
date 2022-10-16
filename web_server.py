@@ -19,43 +19,43 @@ from os import path
 HOST = '0.0.0.0'
 PORT = int(os.environ.get('PORT', 3000))
 
-getHeader = """HTTP/1.1 200 OK/r
-Content-Type: {}/r
-Content-Length: {}/r
-/r
+getHeader = """HTTP/1.1 200 OK\r
+Content-Type: {}\r
+Content-Length: {}\r
+\r
 """
 
-loginHeader = """HTTP/1.1 200 OK/r
-Content-Type: text/html/r
-Content-Length: {}/r
-Set-Cookie: user={}; Max-Age=3600; Path=/ /r
-/r
+loginHeader = """HTTP/1.1 200 OK\r
+Content-Type: text/html\r
+Content-Length: {}\r
+Set-Cookie: user={}; Max-Age=3600; Path=/ \r
+\r
 """
 
-signUpHeader = """HTTP/1.1 200 OK/r
-Content-Type: text/html/r
-Content-Length: {}/r
-/r
+signUpHeader = """HTTP/1.1 200 OK\r
+Content-Type: text/html\r
+Content-Length: {}\r
+\r
 """
 
-loginErrorHeader = """HTTP/1.1 401/r
-Content-Length: {}/r
-/r
+loginErrorHeader = """HTTP/1.1 401\r
+Content-Length: {}\r
+\r
 """
 
-signUpErrorHeader = """HTTP/1.1 401/r
-Content-Length: {}/r
-/r
+signUpErrorHeader = """HTTP/1.1 401\r
+Content-Length: {}\r
+\r
 """
 
-tweetErrorHeader = """HTTP/1.1 403/r
-Content-Length: {}/r
-/r
+tweetErrorHeader = """HTTP/1.1 403\r
+Content-Length: {}\r
+\r
 """
 
-badRequestHeader = """HTTP/1.1 400/r
-Content-Length: {}/r
-/r
+badRequestHeader = """HTTP/1.1 400\r
+Content-Length: {}\r
+\r
 """
 
 body = """
