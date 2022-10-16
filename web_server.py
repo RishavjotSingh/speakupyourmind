@@ -16,8 +16,8 @@ import os
 from os import path
 
 
-HOST = ''
-PORT = os.environ.get('PORT', 3000)
+HOST = '0.0.0.0'
+PORT = int(os.environ.get('PORT', 3000))
 
 getHeader = """HTTP/1.1 200 OK
 Content-Type: {}
