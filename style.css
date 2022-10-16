@@ -1,0 +1,143 @@
+.banner {
+    background-image: url(/SpeakUpYourMind.png);
+    height: 25vw;
+    min-height: 100px;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: fixed;
+    background-size: 45%;
+    background-color: black;
+    background-attachment: fixed;
+}
+
+.span {
+    background: linear-gradient(to right, yellow, yellow);
+    padding: 10px 55px;
+    border-radius: 20px;
+    color: black;
+    text-align: center;
+    border: solid black;
+}
+ label {
+        display: inline-block;
+        width: 45%;
+        text-align: right;
+      }
+
+/*#userName*/
+/*{*/
+/*    width: 20%;*/
+/*    height: 5%;*/
+/*    padding: 12px 20px;*/
+/*    margin: 8px 0;*/
+/*    box-sizing: border-box;*/
+/*    border: 2px solid black;*/
+/*    border-radius: 4px;*/
+/*    font-size: 15px;*/
+/*}*/
+
+/*#password*/
+/*{*/
+/*    width: 20%;*/
+/*    height: 5%;*/
+/*    padding: 12px 20px;*/
+/*    margin: 8px 0;*/
+/*    box-sizing: border-box;*/
+/*    border: 2px solid black;*/
+/*    border-radius: 4px;*/
+/*    font-size: 15px;*/
+/*}*/
+
+/*#post*/
+/*{*/
+/*    width: 80%;*/
+/*    height: 8%;*/
+/*    padding: 12px 20px;*/
+/*    margin: 8px 0;*/
+/*    box-sizing: border-box;*/
+/*    border: 2px solid black;*/
+/*    border-radius: 4px;*/
+/*    font-size: 20px;*/
+/*}*/
+
+
+button {
+      background-color: #e7e7e7; color: black; /* Gray */
+      padding: 15px 32px;
+
+      text-align: center;
+
+      display: inline-block;
+      font-size: 20px;
+    border-radius: 12px;
+
+}
+
+th, td {
+  border-bottom: 1px solid #ddd;
+
+}
+
+
+table {
+    font-size: 150%;
+    width: 100%;
+}
+
+/*th {*/
+/*  height: 100%;*/
+/*}*/
+
+
+/*table {*/
+/*    !*border-collapse: collapse;*!*/
+/*}*/
+
+/*td {*/
+/*    text-align:center;*/
+/*    border:1px solid black;*/
+/*    padding:5px*/
+/*}*/
+
+
+
+.geeks {
+    border-right:hidden;
+}
+.gfg {
+    border-collapse:separate;
+    border-spacing:0 15px;
+}
+
+
+
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 0.5em;
+
+}
+
+tr {
+    font-size: 1.2em;
+}
+
+tr td {
+  padding: 15px 20px;
+  background-color: lightgray;
+}
+
+tr td:first-of-type {
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+    border: solid;
+}
+
+tr td:last-of-type {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+        border: solid;
+
+}
+
+textarea { font-size: 120%; font-family: Times}

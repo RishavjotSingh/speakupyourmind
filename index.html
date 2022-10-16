@@ -1,0 +1,303 @@
+<!--========================================================================================================================================================================-->
+<!--Name          :   Rishavjot Singh-->
+<!--Student Number:   007903539-->
+<!--Course        :   COMP 3010-->
+<!--Instructor    :   Prof. Robert Guderian-->
+<!--Assignment    :   2-->
+<!--File          :   index.html-->
+<!--========================================================================================================================================================================-->
+
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+
+        function updateTableData(oReq)
+        {
+            var requestString = oReq.responseText;
+            var tweets = JSON.parse(requestString);
+            var tableData = "";
+
+            var tweetsCount = Object.keys(tweets).length;
+
+            var usersList = [];
+
+            for (var user in tweets) {
+                usersList.push(user);
+            }
+
+            for (var i = 0; i < tweetsCount; i++)
+            {
+                var userTweetsList = tweets[usersList[i]];
+
+                for (var j = 0; j < userTweetsList.length; j++)
+                {
+                    tableData += "<tr style='border-radius: 25px;'><td class = \"geeks\" >" + userTweetsList[j] + "</td><td style=\"width:200px\" style=\"padding:10px\"><b>" + "- </b>" + usersList[i] + "</td></tr>";
+                }
+            }
+
+            var table = document.getElementById("theTable");
+            table.innerHTML = tableData;
+        }
+
+        function showLoginPage()
+        {
+            var mainPage = document.getElementById("mainPage");
+            mainPage.innerHTML = "<h2><div class='span'>Login with your username and password</div></h2>\n" +
+                        "    \n" +
+                        "        <h2><label>Username:</label><input type=\"text\" id=\"userName\">\n" +
+                        "        <br><br>\n" +
+                        "        <label>Password:</label><input type=\"password\" id=\"password\">\n" +
+                        "        <br><br>\n" +
+                        "        <div id=\"unauthorizedMessage\"></div>\n" +
+                        "        <label></label><button onClick=\"buttonOnClick()\"><b>Login</b></button></h2>" +
+                        "        <br><br>" +
+                        "        <label><h3>If you do not have an account: </h3></label><button onClick=\"showSignUpPage()\"><b>Sign Up</b></button></h2>"
+
+        }
+
+        function showSignUpPage()
+        {
+            mainPage.innerHTML = "<h2><div class='span'>Sign Up</div></h2>\n" +
+                        "    \n" +
+                        "        <h2><label>Set your username:</label><input type=\"text\" id=\"setUserName\">\n" +
+                        "        <br><br>\n" +
+                        "        <label>Set your password:</label><input type=\"password\" id=\"setPassword\">\n" +
+                        "        <label>Confirm your password:</label><input type=\"password\" id=\"confirmPassword\">\n" +
+                        "        <br><br>\n" +
+                        "        <div id=\"passwordMismatch\"></div>\n" +
+                        "        <label></label><button onClick=\"signUp()\"><b>Sign Up</b></button></h2>" +
+                        "        <button onClick=\"showLoginPage()\"><b>Return to login page</b></button></h2>"
+        }
+
+        function signUp()
+        {
+            function loadEventListenerSignUp()
+            {
+                if (oReq.responseText === "Sign-up Successful")
+                {
+                    console.log(oReq.responseText)
+                    document.getElementById("passwordMismatch").innerText = "Sign up successful. You can return to login page.";
+
+                    // clear it
+                    document.getElementById("setUserName").value = "";
+                    document.getElementById("setPassword").value = "";
+                    document.getElementById("confirmPassword").value = "";
+                }
+                else
+                {
+                    document.getElementById("passwordMismatch").innerText = "Username is already in use. Try something else.";
+                }
+            }
+            var newUserName = document.getElementById("setUserName").value;
+            var newPassword = document.getElementById("setPassword").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (newPassword !== confirmPassword)
+            {
+                document.getElementById("passwordMismatch").innerText = "Password did not match.";
+
+                // clear it
+                document.getElementById("setPassword").value = "";
+                document.getElementById("confirmPassword").value = "";
+            }
+            else
+            {
+                var signUpCredentials = {
+                    'username': newUserName,
+                    'password': newPassword
+                }
+
+                var asString = JSON.stringify(signUpCredentials);
+                var oReq = new XMLHttpRequest();
+                oReq.addEventListener("load", loadEventListenerSignUp);
+                oReq.open("POST", "/api/signUp");
+                oReq.setRequestHeader("Accept", "application/json");
+                oReq.withCredentials = true;
+                oReq.send(asString);
+            }
+        }
+
+        function showTweets()
+        {
+            var mainPage = document.getElementById("mainPage");
+            mainPage.innerHTML =
+                "<p><h2><div class='span'>Post what's on your mind</div></h2></p><textarea style='border: solid' name=\"freeform\" rows=\"5%\" cols=\"120%\" id=\"newTweet\">\n" +
+                "</textarea>\n" +
+                "        <button onClick=\"sendNewTweet()\">Post It</button>\n" +
+                "        \n" + "<p> Character Limit: 365</p>" +
+                "        <button onClick=\"logout()\">Logout</button>\n" +
+                "        <br><br><h2><div class='span'>See Posts By Users</div></h2>";
+
+        }
+
+        function communicateWithServer()
+        {
+            // this is a closure, gets variables
+            // from method it is in
+            function loadedEventCallbackGetTweets()
+            {
+                if (oReq.responseText === "Not authorized")
+                {
+                    document.getElementById("unauthorizedMessage").innerText = "Not authorized.";
+                }
+                else
+                {
+                    updateTableData(oReq);
+                    showTweets();
+                }
+            }
+
+            function loadedEventCallbackPostLogin()
+            {
+                if (oReq.responseText === "Login Successful")
+                {
+                    oReq = new XMLHttpRequest();
+                    oReq.addEventListener("load", loadedEventCallbackGetTweets);
+                    oReq.open("GET", "/api/tweet");
+                    oReq.setRequestHeader("Accept", "application/json");
+                    oReq.withCredentials = true; // so we can set cookies
+                    oReq.send();
+                }
+                else
+                {
+                    document.getElementById("unauthorizedMessage").innerText = "Not authorized.";
+                }
+            }
+
+            var userName = document.getElementById("userName").value;
+            var password = document.getElementById("password").value;
+
+            var loginCredentials = {
+                'username': userName,
+                'password': password
+            }
+
+            var asString = JSON.stringify(loginCredentials);
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", loadedEventCallbackPostLogin)
+            oReq.open("POST", "/api/login");
+            oReq.setRequestHeader("Accept", "application/json");
+            oReq.withCredentials = true;
+            oReq.send(asString);
+        }
+
+        function setup()
+        {
+            function loadedEventCallbackResponse()
+            {
+                if (oReq.responseText === "Not authorized")
+                {
+                    showLoginPage();
+                    var table = document.getElementById("theTable");
+                    table.innerHTML = "";
+                }
+                else
+                {
+                    updateTableData(oReq);
+                    showTweets();
+                }
+            }
+
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", loadedEventCallbackResponse);
+            oReq.open("GET", "/api/tweet");
+            oReq.setRequestHeader("Accept", "application/json");
+            oReq.withCredentials = true; // so we can set cookies
+            oReq.send();
+        }
+
+        function buttonOnClick()
+        {
+            communicateWithServer();
+
+            // clear it
+            document.getElementById("userName").value = "";
+            document.getElementById("password").value = "";
+        }
+
+        function sendNewTweet()
+        {
+            console.log("hvb");
+            function loadedEventCallbackViewTweets()
+            {
+                if (oReq.responseText === "Not authorized")
+                {
+                    setup();
+                    document.getElementById("unauthorizedMessage").innerText = "Not authorized.";
+                }
+                else
+                {
+                    updateTableData(oReq);
+                }
+            }
+
+            function loadedEventCallbackTweetPosted()
+            {
+                if (oReq.responseText === "New tweet posted.")
+                {
+                    oReq = new XMLHttpRequest();
+                    oReq.addEventListener("load", loadedEventCallbackViewTweets);
+                    oReq.open("GET", "/api/tweet");
+                    oReq.setRequestHeader("Accept", "application/json");    //////
+                    oReq.withCredentials = true; // so we can set cookies
+                    oReq.send();
+                }
+                else
+                {
+                    setup();
+                    document.getElementById("unauthorizedMessage").innerText = "Not authorized.";
+                }
+            }
+
+            var newTweet = document.getElementById("newTweet").value;
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", loadedEventCallbackTweetPosted);
+            oReq.open("POST", "/api/tweet");
+            oReq.setRequestHeader("Accept", "application/json");
+            oReq.withCredentials = true;
+            oReq.send(newTweet);
+
+            document.getElementById("newTweet").value = ""
+        }
+
+        function logout()
+        {
+            function loadEventCallbackLogout()
+            {
+                showLoginPage();
+                showLoginPage();
+                var table = document.getElementById("theTable");
+                table.innerHTML = "";
+            }
+
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", loadEventCallbackLogout);
+            oReq.open("DELETE", "/api/login");
+            oReq.setRequestHeader("Accept", "application/json");
+            oReq.withCredentials = true;
+            oReq.send()
+        }
+
+    </script>
+</head>
+
+<body onLoad='setup()'>
+
+<div id='fillHere'>
+    <div class="banner"></div>
+
+    <div id='mainPage'></div>
+
+    </div>
+
+
+    <table id="theTable" class = "gfg">
+
+    </table>
+</body>
+
+</html>
