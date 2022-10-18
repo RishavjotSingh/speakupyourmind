@@ -183,7 +183,7 @@ def handleLoginPOST(requestString, conn):
     requestStringParts = requestString.split("\n\r")
     requestBody = requestStringParts[1].strip()
     
-    print(requestBody);
+    print("Request Body:", requestBody);
 
     loginCredentials = json.loads(requestBody)
 
@@ -213,7 +213,7 @@ def handleSignUpPOST(requestString, conn):
     requestStringParts = requestString.split("\n\r")
     requestBody = requestStringParts[1].strip()
     
-    print(requestBody);
+    print("Request Body: ",requestBody);
 
     signUpCredentials = json.loads(requestBody)
     userName = signUpCredentials['username']
