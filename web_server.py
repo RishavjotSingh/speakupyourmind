@@ -15,7 +15,6 @@ import os
 
 from os import path
 
-
 HOST = '0.0.0.0'
 PORT = int(os.environ.get('PORT', 3000))
 
@@ -84,6 +83,7 @@ file = open("tweets.txt", "r")
 tweetsAsStr = file.read()
 file.close()
 tweets = json.loads(tweetsAsStr)
+
 
 # Helper method that tells if the user is logged in (the cookie for that user exists)
 def getCookieUserName(requestString):
@@ -182,7 +182,7 @@ def handleGET(requestString, conn):
 def handleLoginPOST(requestString, conn):
     requestStringParts = requestString.split("\n\r")
     requestBody = requestStringParts[1].strip()
-    
+
     print("Request Body:", requestBody);
 
     loginCredentials = json.loads(requestBody)
@@ -191,7 +191,6 @@ def handleLoginPOST(requestString, conn):
     password = loginCredentials['password']
 
     thisHeader = ''
-
 
     if validateUser(userName, password):
         body = "Login Successful"
@@ -209,11 +208,12 @@ def handleLoginPOST(requestString, conn):
 
     conn.sendall(msg)
 
+
 def handleSignUpPOST(requestString, conn):
     requestStringParts = requestString.split("\n\r")
     requestBody = requestStringParts[1].strip()
-    
-    print("Request Body: ",requestBody);
+
+    print("Request Body: ", requestBody);
 
     signUpCredentials = json.loads(requestBody)
     userName = signUpCredentials['username']
@@ -281,9 +281,9 @@ def handleGETtweet(requestString, conn):
         body = "Not authorized"
         thisHeader = tweetErrorHeader.format(len(body))
 
-
     msg = thisHeader.encode() + body.encode()
     conn.sendall(msg)
+
 
 def handleTweetPOST(requestString, conn):
     cookieUsername = getCookieUserName(requestString)
@@ -315,6 +315,7 @@ def handleTweetPOST(requestString, conn):
     msg = thisHeader.encode() + body.encode()
     conn.sendall(msg)
 
+
 def handleLoginDELETE(requestString, conn):
     cookieUsername = getCookieUserName(requestString)
 
@@ -327,12 +328,14 @@ def handleLoginDELETE(requestString, conn):
     msg = thisHeader.encode() + body.encode()
     conn.sendall(msg)
 
+
 def handleBadRequest(conn):
     body = "BAD Request"
     thisHeader = badRequestHeader.format(len(body))
 
     msg = thisHeader.encode() + body.encode()
     conn.sendall(msg)
+
 
 def handle(conn: socket.socket, addr):
     with conn:
@@ -344,7 +347,11 @@ def handle(conn: socket.socket, addr):
         requestStringParts = requestString.split("\n")
         requestHeader = requestStringParts[0]
 
-        print(requestHeader)
+        print("Request String:", requestString)
+
+        print("Request Header: ", requestHeader)
+
+        print("String parts", str(requestStringParts))
         print("\n")
 
         if ("GET /api/tweet HTTP/1.1" in requestHeader):
@@ -370,11 +377,11 @@ def main():
         serverSocket.bind((HOST, PORT))
         serverSocket.listen()
 
-
         while True:
             conn, addr = serverSocket.accept()
 
-            newThread = threading.Thread(target=handle, args=(conn,addr))
+            newThread = threading.Thread(target=handle, args=(conn, addr))
             newThread.start()
+
 
 main()
