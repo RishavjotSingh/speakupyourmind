@@ -1,12 +1,3 @@
-# ========================================================================================================================================================================
-# Name          :   Rishavjot Singh
-# Student Number:   007903539
-# Course        :   COMP 3010
-# Instructor    :   Prof. Robert Guderian
-# Assignment    :   2
-# File          :   web_server.py
-# ========================================================================================================================================================================
-
 import json
 import socket
 import threading
@@ -183,7 +174,7 @@ def handleLoginPOST(requestString, conn):
     requestStringParts = requestString.split("\n\r")
     requestBody = requestStringParts[1].strip()
 
-    print("Request Body:", requestBody);
+    print("Request Body:", requestBody)
 
     loginCredentials = json.loads(requestBody)
 
@@ -340,7 +331,7 @@ def handleBadRequest(conn):
 def handle(conn: socket.socket, addr):
     with conn:
         print("Connected by: ", addr)
-        data = conn.recv(1024)
+        data = conn.recv(5000)
         requestString = data.decode("utf-8")
 
         # After starting, we will receive login request (POST)
@@ -353,6 +344,11 @@ def handle(conn: socket.socket, addr):
 
         print("String parts", str(requestStringParts))
         print("\n")
+
+        # if body is empty and content-length > 0
+        # read the body
+
+
 
         if ("GET /api/tweet HTTP/1.1" in requestHeader):
             handleGETtweet(requestString, conn)
