@@ -182,6 +182,8 @@ def handleGET(requestString, conn):
 def handleLoginPOST(requestString, conn):
     requestStringParts = requestString.split("\n\r")
     requestBody = requestStringParts[1].strip()
+    
+    print(requestBody);
 
     loginCredentials = json.loads(requestBody)
 
@@ -210,6 +212,8 @@ def handleLoginPOST(requestString, conn):
 def handleSignUpPOST(requestString, conn):
     requestStringParts = requestString.split("\n\r")
     requestBody = requestStringParts[1].strip()
+    
+    print(requestBody);
 
     signUpCredentials = json.loads(requestBody)
     userName = signUpCredentials['username']
