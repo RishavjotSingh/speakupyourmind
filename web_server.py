@@ -52,17 +52,9 @@ body = """
 """
 
 users = {}
-# users['user1'] = 'password1'
-# users['Rick'] = 'glipglop'
-# users['Morty'] = 'mortypassword'
-#
-# user1Tweets = ["Hey, user1 here."]
-# rickTweets = ["Hi Morty"]
-# mortyTweets = ["Hey Rick!"]
 
 cookiesList = []
 
-# tweets = {"user1": user1Tweets, "Rick": rickTweets, "Morty": mortyTweets}
 tweets = {}
 
 usersFile = open("users.txt", "r")
@@ -156,7 +148,7 @@ def handleGET(requestString, conn):
         else:
             thisHeader = getHeader.format("text/html", len(body))
 
-        msg = thisHeader.encode('utf-8') + body  # this is the message we need to send ( a binary string)
+        msg = thisHeader.encode('utf-8') + body  # this is the message we need to send (a binary string)
 
         conn.sendall(msg)
     else:
@@ -165,7 +157,7 @@ def handleGET(requestString, conn):
 
         thisHeader = getHeader.format("text/html", len(body))
 
-        msg = thisHeader.encode('utf-8') + body  # this is the message we need to send ( a binary string)
+        msg = thisHeader.encode('utf-8') + body  # this is the message we need to send (a binary string)
 
         conn.sendall(msg)
 
@@ -195,7 +187,7 @@ def handleLoginPOST(requestString, conn):
 
         thisHeader = loginErrorHeader.format(len(body))
 
-    msg = thisHeader.encode() + body.encode()  # this is the message we need to send ( a binary string)
+    msg = thisHeader.encode() + body.encode()  # this is the message we need to send (a binary string)
 
     conn.sendall(msg)
 
@@ -244,10 +236,6 @@ def handleSignUpPOST(requestString, conn):
         tweetsAsStr = json.dumps(tweets)
         file.write(tweetsAsStr)
         file.close()
-
-
-
-
     else:
         body = "Username already in use."
         thisHeader = signUpErrorHeader.format(len(body))
@@ -344,11 +332,6 @@ def handle(conn: socket.socket, addr):
 
         print("String parts", str(requestStringParts))
         print("\n")
-
-        # if body is empty and content-length > 0
-        # read the body
-
-
 
         if ("GET /api/tweet HTTP/1.1" in requestHeader):
             handleGETtweet(requestString, conn)
