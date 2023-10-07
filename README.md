@@ -1,5 +1,8 @@
 ## About the Project
-This project uses Python ```Socket Programming```. ```REST APIs``` are used to communicate with the server. The server receives the ```HTTP``` requests and responds by sending back the appropriate data that was asked in the request. ```AJAX``` is also used in this project to prevent reloading the page again and again after each request. 
+This project uses ```Python Socket Programming```. 
+Users can set up an account, log in, and create text posts (as on social media).
+```RESTful APIs``` along with ```HTTP headers``` and JSON are used to communicate with the server.  
+```JavaScript AJAX``` is used to prevent reloading the page each time and JavaScript methods for ```DOM manipulation```.
 
 ## How to Run
 Download all the files. First run the web_server.py file, either using an IDE or terminal. 
